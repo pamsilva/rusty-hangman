@@ -1,6 +1,6 @@
 # Rusty Hangman
 
-Implementation of hangman in rust - just an learning rust.
+WIP Implementation of hangman in rust - just an learning rust.
 
 ### Instructions
 
