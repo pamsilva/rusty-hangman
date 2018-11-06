@@ -31,6 +31,7 @@ pub fn update_state(state: &GameState, guess: &str) -> GameState {
 				visibility: state.visibility.to_vec()
 			}
 		}
+
 	} else {
 		let mut new_visibility = vec![false; state.word.len()];
 		let guess_vec: Vec<char> = guess.chars().collect();
@@ -45,6 +46,21 @@ pub fn update_state(state: &GameState, guess: &str) -> GameState {
 			visibility: new_visibility
 		}
 	}
+}
+
+
+pub fn derive_visible_word(state: &GameState) -> String {
+	let mut res = Vec::new();
+
+	for i in 0..state.word.len() {
+		if state.visibility[i] {
+			res.push(state.word[i]);
+		} else {
+			res.push('_');
+		}
+	}
+
+	res.iter().collect::<String>()
 }
 
 
@@ -114,7 +130,7 @@ mod test {
 
 	#[test]
 	fn update_state_wrong_word() {
-		let dummy_word = "potato"; 
+		let dummy_word = "potato";
 
 		let before = GameState {
 			attempts: 2,
@@ -127,6 +143,21 @@ mod test {
 		assert_eq!(after.attempts, before.attempts - 1);
 		assert_eq!(after.word, before.word);
 		assert_eq!(after.visibility, before.visibility);
+	}
+
+	#[test]
+	fn validate_visible_word() {
+		let dummy_word = "potato";
+
+		let test_state = GameState {
+			attempts: 2,
+			word: dummy_word.chars().collect(),
+			visibility: vec![false, true, false, true, false, true]
+		};
+
+		let res = derive_visible_word(&test_state);
+
+		assert_eq!(res, "_o_a_o");
 	}
 
 }
