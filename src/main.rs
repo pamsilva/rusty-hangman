@@ -1,6 +1,7 @@
 
 mod state;
 mod word_source;
+mod user_input;
 
 fn main() {
     println!("Hello, world!");
@@ -14,4 +15,6 @@ fn main() {
     println!(" The random word is :	{:?}", word_source::get_random_word());
 
     println!(" The visibility is :	{:?}", state::derive_visible_word(&state));
+
+    println!(" Your guess was {:?}", user_input::take_user_guess());
 }
