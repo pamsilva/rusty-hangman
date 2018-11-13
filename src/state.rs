@@ -1,8 +1,8 @@
 #[derive(Debug)]
 pub struct GameState {
-	attempts: i8,
-	word: Vec<char>,
-	visibility: Vec<bool>
+	pub attempts: i8,
+	pub word: Vec<char>,
+	pub visibility: Vec<bool>
 }
 
 
@@ -64,9 +64,35 @@ pub fn derive_visible_word(state: &GameState) -> String {
 }
 
 
+pub fn has_guessed_the_word(state: &GameState) -> bool {
+	state.visibility.iter().fold(true, |res, val| res & val)
+}
+
+
+pub fn display_state(state: &GameState) {
+	println!(
+		"The word {}, and you have {} attempts.", 
+		derive_visible_word(&state),
+		state.attempts
+	)
+}
+
+
 #[cfg(test)]
 mod test {
     use super::*;
+
+    #[test]
+    fn validate_has_guessed_the_word() {
+    	let before = init_state("potato");
+    	assert_eq!(false, has_guessed_the_word(&before));
+
+    	let after = update_state(&before, "o");
+    	assert_eq!(false, has_guessed_the_word(&after));
+
+    	let last = update_state(&after, "potato");
+    	assert_eq!(true, has_guessed_the_word(&last));
+    }
 
     #[test]
     fn proper_initial_state() {

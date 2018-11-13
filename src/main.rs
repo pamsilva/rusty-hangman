@@ -1,20 +1,33 @@
 
 mod state;
 mod word_source;
-mod user_input;
+mod input;
+
+fn play(_state: &state::GameState) {
+	while _state.attempts > 0 && !state::has_guessed_the_word(&_state){
+		state::display_state(&_state);
+		let guess = input::take_user_guess();
+		state::update_state(&_state, &guess);
+	}
+
+	if state::has_guessed_the_word(&_state) {
+		println!(
+			"Congratulations, you guessed {} in {} attempts",
+			_state.word.iter().collect::<String>(),
+			9 - _state.attempts 
+		);
+	} else {
+		println!(
+			"Too bad you failed to guess the word, but got to {}...",
+			state::derive_visible_word(&_state) 
+		);
+	}
+}
+
 
 fn main() {
     println!("Hello, world!");
 
     let mut state = state::init_state("potato");
-    println!("The state is {:?}", state);
-
-    state = state::update_state(&state, "t");
-    println!("The new state is {:?}", state);
-
-    println!(" The random word is :	{:?}", word_source::get_random_word());
-
-    println!(" The visibility is :	{:?}", state::derive_visible_word(&state));
-
-    println!(" Your guess was {:?}", user_input::take_user_guess());
+    play(&state);
 }
