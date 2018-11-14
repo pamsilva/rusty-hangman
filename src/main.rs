@@ -3,11 +3,15 @@ mod state;
 mod word_source;
 mod input;
 
-fn play(_state: &state::GameState) {
+fn play(mut _state: state::GameState) {
 	while _state.attempts > 0 && !state::has_guessed_the_word(&_state){
 		state::display_state(&_state);
 		let guess = input::take_user_guess();
-		state::update_state(&_state, &guess);
+
+		_state = state::update_state(&_state, &guess);
+
+		println!("state {:?}", _state);
+		println!("guess {:?}", guess);
 	}
 
 	if state::has_guessed_the_word(&_state) {
@@ -29,5 +33,5 @@ fn main() {
     println!("Hello, world!");
 
     let mut state = state::init_state("potato");
-    play(&state);
+    play(state);
 }
