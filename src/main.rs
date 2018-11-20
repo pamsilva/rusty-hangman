@@ -32,6 +32,6 @@ fn play(mut _state: state::GameState) {
 fn main() {
     println!("Hello, world!");
 
-    let mut state = state::init_state("potato");
+    let state = state::init_state("potato");
     play(state);
 }
