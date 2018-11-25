@@ -10,7 +10,6 @@ fn play(mut _state: state::GameState) {
 
 		_state = state::update_state(&_state, &guess);
 
-		println!("state {:?}", _state);
 		println!("guess {:?}", guess);
 	}
 
@@ -30,8 +29,8 @@ fn play(mut _state: state::GameState) {
 
 
 fn main() {
-    println!("Hello, world!");
+    println!("Welcome to rusty hangman. Just hangman implemented in rust.");
 
-    let state = state::init_state("potato");
+    let state = state::init_state(word_source::get_random_word());
     play(state);
 }
