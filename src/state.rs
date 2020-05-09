@@ -97,93 +97,93 @@ mod test {
     #[test]
     fn proper_initial_state() {
     	let init_state = init_state("potato");
-	    
-	    assert_eq!(9, init_state.attempts);
-	    assert_eq!("potato".chars().collect::<Vec<char>>(), init_state.word);
-	    assert_eq!(init_state.word.len(), init_state.visibility.len());
-	}
+	
+	assert_eq!(9, init_state.attempts);
+	assert_eq!("potato".chars().collect::<Vec<char>>(), init_state.word);
+	assert_eq!(init_state.word.len(), init_state.visibility.len());
+    }
 
-	#[test]
-	fn update_state_guess_char() {
-		let dummy_word = "potato"; 
+    #[test]
+    fn update_state_guess_char() {
+	let dummy_word = "potato"; 
 
-		let before = GameState {
-			attempts: 3,
-			word: dummy_word.chars().collect(),
-			visibility: vec![false; dummy_word.len()]
-		};
+	let before = GameState {
+	    attempts: 3,
+	    word: dummy_word.chars().collect(),
+	    visibility: vec![false; dummy_word.len()]
+	};
 
-		let after = update_state(&before, "t");
+	let after = update_state(&before, "t");
 
-		assert_eq!(after.attempts, before.attempts - 1);
-		assert_eq!(after.word, before.word);
-		assert_eq!(after.visibility, [false, false, true, false, true, false]);
-	}
+	assert_eq!(after.attempts, before.attempts - 1);
+	assert_eq!(after.word, before.word);
+	assert_eq!(after.visibility, [false, false, true, false, true, false]);
+    }
 
-	#[test]
-	fn update_state_wrong_char() {
-		let dummy_word = "potato"; 
+    #[test]
+    fn update_state_wrong_char() {
+	let dummy_word = "potato"; 
 
-		let before = GameState {
-			attempts: 2,
-			word: dummy_word.chars().collect(),
-			visibility: vec![false; dummy_word.len()]
-		};
+	let before = GameState {
+	    attempts: 2,
+	    word: dummy_word.chars().collect(),
+	    visibility: vec![false; dummy_word.len()]
+	};
 
-		let after = update_state(&before, "b");
+	let after = update_state(&before, "b");
 
-		assert_eq!(after.attempts, before.attempts - 1);
-		assert_eq!(after.word, before.word);
-		assert_eq!(after.visibility, before.visibility);
-	}
+	assert_eq!(after.attempts, before.attempts - 1);
+	assert_eq!(after.word, before.word);
+	assert_eq!(after.visibility, before.visibility);
+    }
 
-	#[test]
-	fn update_state_guess_word() {
-		let dummy_word = "potato"; 
+    #[test]
+    fn update_state_guess_word() {
+	let dummy_word = "potato"; 
 
-		let before = GameState {
-			attempts: 2,
-			word: dummy_word.chars().collect(),
-			visibility: vec![false; dummy_word.len()]
-		};
+	let before = GameState {
+	    attempts: 2,
+	    word: dummy_word.chars().collect(),
+	    visibility: vec![false; dummy_word.len()]
+	};
 
-		let after = update_state(&before, "potato");
+	let after = update_state(&before, "potato");
 
-		assert_eq!(after.attempts, before.attempts - 1);
-		assert_eq!(after.word, before.word);
-		assert_eq!(after.visibility, vec![true; dummy_word.len()]);
-	}
+	assert_eq!(after.attempts, before.attempts - 1);
+	assert_eq!(after.word, before.word);
+	assert_eq!(after.visibility, vec![true; dummy_word.len()]);
+    }
 
-	#[test]
-	fn update_state_wrong_word() {
-		let dummy_word = "potato";
+    #[test]
+    fn update_state_wrong_word() {
+	let dummy_word = "potato";
 
-		let before = GameState {
-			attempts: 2,
-			word: dummy_word.chars().collect(),
-			visibility: vec![false; dummy_word.len()]
-		};
+	let before = GameState {
+	    attempts: 2,
+	    word: dummy_word.chars().collect(),
+	    visibility: vec![false; dummy_word.len()]
+	};
 
-		let after = update_state(&before, "botato");
+	let after = update_state(&before, "botato");
 
-		assert_eq!(after.attempts, before.attempts - 1);
-		assert_eq!(after.word, before.word);
-		assert_eq!(after.visibility, before.visibility);
-	}
+	assert_eq!(after.attempts, before.attempts - 1);
+	assert_eq!(after.word, before.word);
+	assert_eq!(after.visibility, before.visibility);
+    }
 
-	#[test]
-	fn validate_visible_word() {
-		let dummy_word = "potato";
+    #[test]
+    fn validate_visible_word() {
+	let dummy_word = "potato";
 
-		let test_state = GameState {
-			attempts: 2,
-			word: dummy_word.chars().collect(),
-			visibility: vec![false, true, false, true, false, true]
-		};
+	let test_state = GameState {
+	    attempts: 2,
+	    word: dummy_word.chars().collect(),
+	    visibility: vec![false, true, false, true, false, true]
+	};
 
-		let res = derive_visible_word(&test_state);
+	let res = derive_visible_word(&test_state);
 
-		assert_eq!(res, "_o_a_o");
-	}
+	assert_eq!(res, "_o_a_o");
+    }
 
 }
